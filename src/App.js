@@ -5,7 +5,8 @@ import SetupForm from './SetupForm';
 import Loading from './Loading';
 import Modal from './Modal';
 function App() {
-  const { waiting, loading, questions, error } = useGlobalContext();
+  const { waiting, loading, questions, error, correct, index } =
+    useGlobalContext();
 
   if (waiting) {
     return <SetupForm />;
@@ -13,7 +14,33 @@ function App() {
   if (loading) {
     return <Loading />;
   }
-  return <main>quiz app</main>;
+
+  const { question, correct_answer, incorrect_answers } = questions[index];
+  const answers = [...incorrect_answers, correct_answer];
+
+  return (
+    <main>
+      {/* <Modal /> */}
+      <section className='quiz'>
+        <p className='correct-answers'>
+          correct answers : {correct}/{index}
+        </p>
+        <article className='container'>
+          <h2 dangerouslySetInnerHTML={{ __html: question }} />
+          {answers.map((answer, index) => {
+            return (
+              <button
+                key={index}
+                dangerouslySetInnerHTML={{ __html: answer }}
+                className='answer-btn'
+              />
+            );
+          })}
+        </article>
+        <button className='next-question'> next question</button>
+      </section>
+    </main>
+  );
 }
 
 export default App;
