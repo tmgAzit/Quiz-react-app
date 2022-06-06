@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
 const table = {
   sports: 21,
@@ -9,10 +9,8 @@ const table = {
 
 const API_ENDPOINT = 'https://opentdb.com/api.php?';
 
-const url = '';
-
-const tempURL =
-  'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple';
+// const tempURL =
+//   'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple';
 
 const AppContext = React.createContext();
 
@@ -37,17 +35,16 @@ const AppProvider = ({ children }) => {
     setWaiting(false);
     try {
       const response = await axios(url);
-      // console.log(response);
+
       if (response) {
         const data = response.data.results;
-        console.log(data);
+
         if (data.length > 0) {
           setQuestions(data);
           setLoading(false);
           setWaiting(false);
           setError(false);
         } else {
-          setLoading(false);
           setWaiting(true);
           setError(true);
         }
@@ -98,7 +95,7 @@ const AppProvider = ({ children }) => {
     // const tempURL =
     //   'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple';
 
-    const url = `${API_ENDPOINT}amount=${amount}$category=${table[category]}&difficulty=${difficulty}&type=multiple`;
+    const url = `${API_ENDPOINT}amount=${amount}&category=${table[category]}&difficulty=${difficulty}&type=multiple`;
 
     fetchQuestions(url);
   };
