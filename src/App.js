@@ -5,8 +5,16 @@ import SetupForm from './SetupForm';
 import Loading from './Loading';
 import Modal from './Modal';
 function App() {
-  const { waiting, loading, questions, error, correct, index, nextQuestion } =
-    useGlobalContext();
+  const {
+    waiting,
+    loading,
+    questions,
+    error,
+    correct,
+    index,
+    nextQuestion,
+    checkAnswer,
+  } = useGlobalContext();
 
   if (waiting) {
     return <SetupForm />;
@@ -33,6 +41,7 @@ function App() {
                 key={index}
                 dangerouslySetInnerHTML={{ __html: answer }}
                 className='answer-btn'
+                onClick={() => checkAnswer(correct_answer === answer)}
               />
             );
           })}
